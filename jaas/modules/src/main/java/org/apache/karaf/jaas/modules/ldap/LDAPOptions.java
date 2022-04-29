@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.karaf.jaas.config.KeystoreManager;
 import org.apache.karaf.jaas.modules.JAASUtils;
@@ -48,6 +49,7 @@ public class LDAPOptions {
     public static final String AUTHENTICATION = "authentication";
     public static final String ALLOW_EMPTY_PASSWORDS = "allowEmptyPasswords";
     public static final String DISABLE_CACHE = "disableCache";
+    public static final String CACHE_EXIPRY = "cacheExpiry"; // in milliseconds
     public static final String INITIAL_CONTEXT_FACTORY = "initial.context.factory";
     public static final String CONTEXT_PREFIX = "context.";
     public static final String SSL = "ssl";
@@ -63,6 +65,7 @@ public class LDAPOptions {
     public static final String DEFAULT_AUTHENTICATION = "simple";
     public static final String IGNORE_PARTIAL_RESULT_EXCEPTION = "ignorePartialResultException";
     public static final int DEFAULT_SSL_TIMEOUT = 10;
+    public static final long DEFAULT_CACHE_EXPIRY_MILLIS = TimeUnit.MINUTES.toMillis(15);
 
     private static Logger LOGGER = LoggerFactory.getLogger(LDAPLoginModule.class);
 
@@ -276,6 +279,11 @@ public class LDAPOptions {
         return object == null || Boolean.parseBoolean((String) object);
     }
 
+    public long getCacheExpiry() {
+        final Object object = options.get(CACHE_EXIPRY);
+        return (object == null ? DEFAULT_CACHE_EXPIRY_MILLIS : Long.parseLong((String) object));
+    }
+   
     public boolean getIgnorePartialResultException() {
         return Boolean.parseBoolean((String) options.get(IGNORE_PARTIAL_RESULT_EXCEPTION));
     }

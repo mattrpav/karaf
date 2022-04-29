@@ -71,6 +71,7 @@ public class LDAPCache implements Closeable, NamespaceChangeListener, ObjectChan
     private final Map<String, String[]> userDnAndNamespace;
     private final Map<String, String[]> userRoles;
     private final Map<String, String[]> userPubkeys;
+    private final Map<String, Long> userTimestamp;
     private final LDAPOptions options;
     private DirContext context;
 
@@ -79,6 +80,7 @@ public class LDAPCache implements Closeable, NamespaceChangeListener, ObjectChan
         userDnAndNamespace = new HashMap<>();
         userRoles = new HashMap<>();
         userPubkeys = new HashMap<>();
+        userTimestamp = new HashMap<>();
     }
 
     @Override
@@ -369,5 +371,6 @@ public class LDAPCache implements Closeable, NamespaceChangeListener, ObjectChan
         userDnAndNamespace.clear();
         userRoles.clear();
         userPubkeys.clear();
+        userTimestamp.clear();
     }
 }
